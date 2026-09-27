@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+  
+  h1, h2, h3, .font-display {
+    font-family: 'Cinzel', Georgia, serif;
+  }
+}
+
+@keyframes drawLogoStroke {
+  0% {
+    stroke-dashoffset: 800;
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes pulseGoldGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px rgba(198, 160, 82, 0.45));
+  }
+  50% {
+    filter: drop-shadow(0 0 18px rgba(198, 160, 82, 0.85));
+  }
+}
+
+@keyframes shimmerGold {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes drawStrokeLoop {
+  0% {
+    stroke-dashoffset: 1800;
+    opacity: 0.2;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes flashGoldenSettle {
+  0% {
+    filter: drop-shadow(0 0 0px rgba(198, 160, 82, 0));
+  }
+  45% {
+    filter: drop-shadow(0 0 28px rgba(198, 160, 82, 1)) brightness(1.25);
+  }
+  100% {
+    filter: drop-shadow(0 4px 16px rgba(198, 160, 82, 0.35)) brightness(1);
+  }
+}
+
+@keyframes tracerPulseGlow {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
+.animate-draw-stroke {
+  stroke-dasharray: 1800;
+  stroke-dashoffset: 1800;
+  animation: drawStrokeLoop 2.2s cubic-bezier(0.35, 0, 0.2, 1) forwards;
+}
+
+.animate-golden-settle {
+  animation: flashGoldenSettle 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-tracer-glow {
+  animation: tracerPulseGlow 1s ease-in-out infinite;
+}
+
+@keyframes revealFromBottom {
+  0% {
+    clip-path: inset(100% 0 0 0);
+    opacity: 0.2;
+    transform: translateY(8px);
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    clip-path: inset(0% 0 0 0);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scanGoldSweep {
+  0% {
+    top: 100%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    top: -5%;
+    opacity: 0;
+  }
+}
+
+.animate-reveal-bottom {
+  animation: revealFromBottom 2.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-gold-sweep {
+  animation: scanGoldSweep 2.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-gold-glow {
+  animation: pulseGoldGlow 3s ease-in-out infinite;
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #F3E5AB 0%, #C6A052 50%, #9B7832 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.border-gold-gradient {
+  border-image: linear-gradient(135deg, #C6A052, #E6C875, #9B7832) 1;
+}
+
+/* Apple design easing and animations */
+.ease-apple {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.will-change-transform {
+  will-change: transform, opacity;
+}
+
+/* Custom scrollbar for luxury aesthetic */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #071A2B;
+}
+::-webkit-scrollbar-thumb {
+  background: #C6A052;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #E5C378;
+}

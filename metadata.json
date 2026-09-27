@@ -1,0 +1,6 @@
+{
+  "name": "PROMOMEX | Inmobiliaria Patrimonial",
+  "description": "Firma inmobiliaria corporativa y patrimonial de alto nivel. Asesoría integral, gestión legal y oportunidades inmobiliarias con máxima certeza jurídica.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
