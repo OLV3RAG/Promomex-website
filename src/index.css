@@ -80,6 +80,23 @@
   }
 }
 
+/* Hardware accelerated logo reveal for mobile Safari/iOS (Zero Lag 60fps) */
+@keyframes revealUp {
+  0% {
+    -webkit-transform: translateY(0%);
+    transform: translateY(0%);
+  }
+  100% {
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+  }
+}
+
+.animate-reveal-up {
+  -webkit-animation: revealUp 3.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: revealUp 3.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
 /* Zero-lag hardware accelerated curtain reveal (pure GPU transform translateY) */
 @keyframes curtainRevealUp {
   0% {
