@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowUpRight, ShieldCheck, Compass, Award } from 'lucide-react';
+import { ArrowUpRight, ShieldCheck, Compass, Award, Sparkles } from 'lucide-react';
 import { AnimatedReveal } from './AnimatedReveal';
 
 interface HeroProps {
@@ -171,114 +171,39 @@ export const Hero: React.FC<HeroProps> = ({
             </AnimatedReveal>
           </div>
 
-          {/* Column Right: Architectural Frame with Subtle Parallax Depth */}
+          {/* Column Right: High-Resolution Architectural Concept with Parallax and Gold Border */}
           <div className="lg:col-span-5 relative">
             <AnimatedReveal delay={350} distance={30}>
               <div
-                className="relative p-3.5 sm:p-4 rounded-[2rem] border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl shadow-2xl shadow-black/60 group hover:border-[#C6A052]/30 transition-all duration-500 hover:scale-[1.015] will-change-transform"
+                className="relative p-3 sm:p-3.5 rounded-[2rem] border border-[#C6A052]/20 bg-white/[0.02] backdrop-blur-xl shadow-2xl shadow-black/80 group hover:border-[#C6A052]/40 transition-all duration-500 hover:scale-[1.015] will-change-transform"
                 style={{
                   transform: `translate3d(0, -${parallaxOffset}px, 0)`,
                   transition: 'transform 0.2s ease-out, border-color 0.5s ease',
                 }}
               >
                 {/* Subtle ambient interior glow */}
-                <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-tr from-[#C6A052]/5 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-tr from-[#C6A052]/10 to-transparent pointer-events-none" />
 
-                {/* Architectural Residence Canvas Artwork */}
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#0A2238] rounded-2xl">
-                  {/* Vector Architectural Scene: Luxury Modern Residence at Twilight */}
-                  <svg
-                    viewBox="0 0 600 450"
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    role="img"
-                    aria-label="Residencia arquitectónica de lujo representativa de PROMOMEX"
-                  >
-                    <defs>
-                      <linearGradient id="twilightSky" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#0B1C2D" />
-                        <stop offset="60%" stopColor="#142C44" />
-                        <stop offset="100%" stopColor="#253D57" />
-                      </linearGradient>
-                      <radialGradient id="interiorWarmth" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stopColor="#FFE082" stopOpacity="0.95" />
-                        <stop offset="60%" stopColor="#C6A052" stopOpacity="0.6" />
-                        <stop offset="100%" stopColor="#071A2B" stopOpacity="0" />
-                      </radialGradient>
-                      <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#1B3852" stopOpacity="0.9" />
-                        <stop offset="100%" stopColor="#0A1826" stopOpacity="0.95" />
-                      </linearGradient>
-                    </defs>
-
-                    {/* Twilight Sky */}
-                    <rect width="600" height="450" fill="url(#twilightSky)" />
-
-                    {/* Atmospheric sparkle in sky */}
-                    <circle cx="120" cy="50" r="1" fill="#F7F4EC" opacity="0.6" />
-                    <circle cx="280" cy="35" r="1.2" fill="#F7F4EC" opacity="0.8" />
-                    <circle cx="450" cy="65" r="0.9" fill="#F7F4EC" opacity="0.5" />
-                    <circle cx="510" cy="40" r="1.1" fill="#F7F4EC" opacity="0.7" />
-
-                    {/* Distant Topographic Mountain Silhouette */}
-                    <path d="M0 240 Q150 180 300 230 T600 210 L600 350 L0 350 Z" fill="#0D2033" opacity="0.7" />
-
-                    {/* Main Luxury Architectural Pavilions */}
-                    <rect x="110" y="140" width="380" height="90" fill="#0B1A28" stroke="#C6A052" strokeWidth="1.2" />
-
-                    {/* Floor-to-ceiling Glass Glazing */}
-                    <rect x="130" y="155" width="100" height="60" fill="#FFE082" fillOpacity="0.15" stroke="#48627D" strokeWidth="0.8" />
-                    <rect x="250" y="155" width="140" height="60" fill="#FFE082" fillOpacity="0.25" stroke="#48627D" strokeWidth="0.8" />
-                    <rect x="410" y="155" width="60" height="60" fill="#FFE082" fillOpacity="0.12" stroke="#48627D" strokeWidth="0.8" />
-
-                    {/* Architectural Mullions */}
-                    <line x1="180" y1="155" x2="180" y2="215" stroke="#C6A052" strokeWidth="0.7" opacity="0.6" />
-                    <line x1="320" y1="155" x2="320" y2="215" stroke="#C6A052" strokeWidth="0.7" opacity="0.6" />
-
-                    {/* Warm Glowing Chandelier Inside Main Living Room */}
-                    <circle cx="320" cy="180" r="45" fill="url(#interiorWarmth)" opacity="0.7" />
-                    <circle cx="320" cy="175" r="4" fill="#FFF9C4" />
-
-                    {/* Ground Level Glass Pavilion & Cantilever Terrace */}
-                    <rect x="80" y="230" width="440" height="110" fill="#0E2336" stroke="#C6A052" strokeWidth="1.4" />
-                    
-                    {/* Ground Floor Glass Panels */}
-                    <rect x="100" y="245" width="180" height="85" fill="#FFE082" fillOpacity="0.2" stroke="#3A536E" strokeWidth="0.8" />
-                    <rect x="300" y="245" width="200" height="85" fill="#FFE082" fillOpacity="0.18" stroke="#3A536E" strokeWidth="0.8" />
-                    
-                    {/* Minimalist Column Supports */}
-                    <rect x="95" y="230" width="10" height="110" fill="#EAD9BA" />
-                    <rect x="285" y="230" width="12" height="110" fill="#EAD9BA" />
-                    <rect x="505" y="230" width="10" height="110" fill="#EAD9BA" />
-
-                    {/* Outdoor Reflecting Water Mirror / Pool */}
-                    <rect x="40" y="340" width="520" height="75" fill="url(#waterGrad)" stroke="#C6A052" strokeWidth="0.8" />
-                    
-                    {/* Water Reflection of Windows */}
-                    <rect x="100" y="342" width="180" height="35" fill="#FFE082" fillOpacity="0.1" />
-                    <rect x="300" y="342" width="200" height="35" fill="#FFE082" fillOpacity="0.08" />
-                    <line x1="60" y1="365" x2="540" y2="365" stroke="#4F718F" strokeWidth="0.5" opacity="0.4" />
-                    <line x1="80" y1="385" x2="520" y2="385" stroke="#4F718F" strokeWidth="0.5" opacity="0.3" />
-
-                    {/* Landscaping */}
-                    <path d="M50 340 L58 220 L66 340 Z" fill="#071521" />
-                    <path d="M68 340 L74 240 L80 340 Z" fill="#071521" />
-                    <path d="M530 340 L538 215 L546 340 Z" fill="#071521" />
-                    <path d="M548 340 L554 250 L560 340 Z" fill="#071521" />
-
-                    {/* Architectural Dimensioning / Grid Accent Lines */}
-                    <line x1="80" y1="120" x2="520" y2="120" stroke="#C6A052" strokeWidth="0.5" strokeDasharray="4 4" opacity="0.6" />
-                    <text x="300" y="112" fill="#C6A052" fontSize="9" letterSpacing="3" textAnchor="middle" fontFamily="sans-serif">
-                      ESTRUCTURA DE ALTA GAMA · PATRIMONIO CERTIFICADO
-                    </text>
-                  </svg>
+                {/* Architectural Residence Canvas Frame */}
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#0A2238] rounded-2xl border border-[#C6A052]/20">
+                  <img
+                    src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80"
+                    alt="Visualización Arquitectónica de Alta Gama PROMOMEX"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-apple group-hover:scale-105"
+                    loading="eager"
+                  />
 
                   {/* Gradient Scrim at Bottom of Image */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#071A2B] via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#071A2B] via-transparent to-transparent opacity-85 pointer-events-none" />
 
-                  {/* Image Overlay Badge */}
-                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-[#F7F4EC] bg-[#071A2B]/85 backdrop-blur-md px-4 py-2.5 border border-white/10 rounded-xl">
+                  {/* Discrete Upper Corner Badge */}
+                  <div className="absolute top-3.5 left-3.5 bg-[#071A2B]/85 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/10 text-[11px] font-medium text-[#C6A052] tracking-wider uppercase flex items-center gap-1.5 shadow-lg">
+                    <Sparkles className="w-3 h-3 text-[#C6A052]" />
+                    <span>Visualización Arquitectónica</span>
+                  </div>
+
+                  {/* Image Overlay Bottom Bar */}
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-[#F7F4EC] bg-[#071A2B]/85 backdrop-blur-md px-4 py-2.5 border border-white/10 rounded-xl">
                     <span className="font-display tracking-wider text-xs">
                       Curaduría Notarial & Valuación
                     </span>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart3, Eye, UserCheck } from 'lucide-react';
+import { BarChart3, Eye, UserCheck, Sparkles, ShieldCheck } from 'lucide-react';
 import { AnimatedReveal } from './AnimatedReveal';
 
 interface NosotrosProps {
@@ -69,7 +69,7 @@ export const Nosotros: React.FC<NosotrosProps> = ({ onNavigate }) => {
         </div>
 
         {/* 3 Interactive Bento Cards with Staggered Cascading Reveal */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-16">
           {pillars.map((pillar, idx) => {
             const Icon = pillar.icon;
             return (
@@ -133,6 +133,50 @@ export const Nosotros: React.FC<NosotrosProps> = ({ onNavigate }) => {
             );
           })}
         </div>
+
+        {/* High-Resolution Architectural Spotlight Frame in Nosotros */}
+        <AnimatedReveal delay={200} distance={20}>
+          <div className="relative rounded-3xl overflow-hidden border border-[#C6A052]/20 shadow-2xl shadow-black/10 group hover:scale-[1.008] transition-all duration-500 bg-[#071A2B]">
+            <div className="relative aspect-[21/9] min-h-[300px] sm:min-h-[380px] w-full overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80"
+                alt="Visualización Arquitectónica de Excelencia PROMOMEX"
+                className="w-full h-full object-cover transition-transform duration-700 ease-apple group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#071A2B]/90 via-[#071A2B]/50 to-transparent" />
+
+              {/* Discrete Upper Corner Badge */}
+              <div className="absolute top-4 left-4 bg-[#071A2B]/85 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/10 text-[11px] font-medium text-[#C6A052] tracking-wider uppercase flex items-center gap-1.5 shadow-lg">
+                <Sparkles className="w-3 h-3 text-[#C6A052]" />
+                <span>Visualización Arquitectónica</span>
+              </div>
+
+              {/* Content overlay on left side */}
+              <div className="absolute inset-y-0 left-0 flex flex-col justify-center p-8 sm:p-14 max-w-xl text-white">
+                <span className="text-xs uppercase tracking-widest text-[#C6A052] font-semibold mb-2 flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>Curaduría Espacial & Rigor Documental</span>
+                </span>
+                <h3 className="font-display text-2xl sm:text-3xl font-bold mb-3 leading-snug">
+                  Espacios Concebidos para Trasceder Generaciones
+                </h3>
+                <p className="text-xs sm:text-sm text-[#F7F4EC]/80 leading-relaxed font-light mb-6">
+                  Cada propiedad respaldada por PROMOMEX conjuga armonía arquitectónica contemporánea con solvencia jurídica absoluta, protegiendo tanto el bienestar cotidiano como la plusvalía patrimonial.
+                </p>
+                <div>
+                  <button
+                    onClick={() => onNavigate('servicios')}
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#C6A052] text-[#071A2B] text-xs font-semibold uppercase tracking-wider hover:bg-[#d8b464] transition-all hover:scale-105 cursor-pointer shadow-md"
+                  >
+                    <span>Conocer Nuestro Proceso</span>
+                    <span className="text-sm">›</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </AnimatedReveal>
       </div>
     </section>
   );

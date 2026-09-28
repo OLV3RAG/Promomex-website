@@ -9,6 +9,7 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Nosotros } from './components/Nosotros';
 import { Servicios } from './components/Servicios';
+import { AIMatchWizard } from './components/AIMatchWizard';
 import { Oportunidades } from './components/Oportunidades';
 import { ComoFunciona } from './components/ComoFunciona';
 import { Transparencia } from './components/Transparencia';
@@ -16,6 +17,7 @@ import { FAQ } from './components/FAQ';
 import { Contacto } from './components/Contacto';
 import { Footer } from './components/Footer';
 import { WhatsAppWidget } from './components/WhatsAppWidget';
+import { AIAdvisorWidget } from './components/AIAdvisorWidget';
 
 // Code splitting for secondary overlay modals: only loaded when invoked
 const PrivacyModal = lazy(() =>
@@ -62,6 +64,14 @@ export default function App() {
     [navigateToSection]
   );
 
+  const handleApplyAIProfileToContact = useCallback(
+    (profileSummary: string) => {
+      setContactInitialInterest(profileSummary);
+      navigateToSection('contacto');
+    },
+    [navigateToSection]
+  );
+
   const handleRequestCustomOpportunity = useCallback(
     (presetInterest?: string) => {
       setCustomOppPreset(presetInterest || 'Oportunidades Residenciales Exclusivas');
@@ -81,53 +91,57 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#071A2B] text-[#F7F4EC] relative selection:bg-[#C6A052] selection:text-[#071A2B]">
-      {/* 2. PANTALLA DE CARGA INICIAL (LOADER / INTRO SCREEN) */}
+      {/* PANTALLA DE CARGA INICIAL: Trazado vectorial PROMOMEX 1.svg y frase oficial */}
       {showIntro && <IntroLoader onComplete={handleIntroComplete} />}
 
-      {/* 1. Header / Navbar */}
+      {/* Header / Navbar con Frosted Glass y Enlaces Estilizados */}
       <Navbar onContactClick={handleContactClick} />
 
-      {/* Main Content Container with strict section order */}
+      {/* Main Content Container: Esquemas visuales minimalistas estilo Apple Bento */}
       <main>
-        {/* 2. Hero / Inicio */}
+        {/* 1. Hero / Inicio: Tipografía balanceada, prueba cuantitativa y render arquitectónico */}
         <Hero
           onExploreOpportunities={handleExploreOpportunities}
           onExploreServices={handleExploreServices}
         />
 
-        {/* 3. Nosotros (3 Interactive Pillars: Análisis, Claridad, Seguimiento) */}
+        {/* 2. Nosotros: 3 pilares Bento compactos y banner arquitectónico de alta gama */}
         <Nosotros onNavigate={navigateToSection} />
 
-        {/* 4. Servicios (6 tarjetas con micro-interacciones) */}
+        {/* 3. Servicios: 6 tarjetas Bento condensadas con chips rápidos */}
         <Servicios onSelectService={handleServiceSelect} />
 
-        {/* 5. Oportunidades (Inventario - Empty State Elegante Antialucinación) */}
+        {/* 4. ESQUEMA 3: Módulo IA "Match Patrimonial" (Selector rápido de 3 clics) */}
+        <AIMatchWizard onApplyProfileToContact={handleApplyAIProfileToContact} />
+
+        {/* 5. Oportunidades: Estado vacío (Empty State) con curaduría notarial activa */}
         <Oportunidades onRequestCustom={handleRequestCustomOpportunity} />
 
-        {/* 6. Cómo Funciona (4 etapas con línea de tiempo visual) */}
+        {/* 6. ESQUEMA 1: Cómo Funciona (Línea de tiempo horizontal de 4 nodos 1-2-3-4) */}
         <ComoFunciona />
 
-        {/* 7. Transparencia (Certeza jurídica y cero letras chiquitas) */}
+        {/* 7. ESQUEMA 2: Ecosistema de Certeza Jurídica (Dashboard de 3 tarjetas métricas) */}
         <Transparencia />
 
-        {/* 8. FAQ (Acordeón interactivo con 6 preguntas esenciales) */}
+        {/* 8. FAQ: Preguntas frecuentes con acordeón interactivo sin saltos */}
         <FAQ />
 
-        {/* 9. Contacto (Formulario con validación y honeypot + Canales) */}
+        {/* 9. Contacto: Formulario con técnica honeypot y canales directos */}
         <Contacto
           initialInterest={contactInitialInterest}
           onOpenPrivacy={() => setIsPrivacyOpen(true)}
         />
       </main>
 
-      {/* 10. Footer y Widget Flotante */}
+      {/* Footer y Enlace para Revivir la Intro */}
       <Footer
         onOpenPrivacy={() => setIsPrivacyOpen(true)}
         onReplayIntro={handleReplayIntro}
       />
 
-      {/* Floating WhatsApp Widget */}
+      {/* Floating Interactive Assistants */}
       <WhatsAppWidget />
+      <AIAdvisorWidget />
 
       {/* Lazily loaded Modals (only mounted when active) */}
       {isPrivacyOpen && (

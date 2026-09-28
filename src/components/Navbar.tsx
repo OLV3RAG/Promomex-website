@@ -38,10 +38,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
     { label: 'Inicio', href: '#inicio' },
     { label: 'Nosotros', href: '#nosotros' },
     { label: 'Servicios', href: '#servicios' },
+    { label: 'Match IA', href: '#ai-match', isAI: true },
     { label: 'Oportunidades', href: '#oportunidades' },
-    { label: 'Cómo Funciona', href: '#como-funciona' },
-    { label: 'Transparencia', href: '#transparencia' },
-    { label: 'FAQ', href: '#faq' },
+    { label: 'Proceso', href: '#como-funciona' },
+    { label: 'Certeza Jurídica', href: '#transparencia' },
     { label: 'Contacto', href: '#contacto' },
   ];
 
@@ -81,9 +81,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="hover:text-white transition-colors duration-200 relative py-1 hover:after:w-full after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#C6A052] after:transition-all after:duration-300 whitespace-nowrap cursor-pointer"
+                className={`hover:text-white transition-colors duration-200 relative py-1 hover:after:w-full after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#C6A052] after:transition-all after:duration-300 whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
+                  link.isAI ? 'text-[#C6A052] font-semibold' : ''
+                }`}
               >
-                {link.label}
+                <span>{link.label}</span>
+                {link.isAI && (
+                  <span className="px-1.5 py-0.2 text-[9px] font-bold rounded-full bg-[#C6A052]/20 border border-[#C6A052]/40 text-[#f9e8b2]">
+                    IA
+                  </span>
+                )}
               </a>
             ))}
           </nav>

@@ -126,6 +126,56 @@
   }
 }
 
+@keyframes connectorFlowAnimation {
+  0% {
+    stroke-dashoffset: 80;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes aiPulseBeam {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes aiScannerBar {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(300%);
+    opacity: 0;
+  }
+}
+
+.animate-connector-flow {
+  stroke-dasharray: 8 8;
+  animation: connectorFlowAnimation 2.5s linear infinite;
+}
+
+.animate-ai-scanner {
+  animation: aiScannerBar 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-ai-pulse {
+  animation: aiPulseBeam 3s ease-in-out infinite;
+}
+
 .animate-reveal-bottom {
   animation: revealFromBottom 2.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }

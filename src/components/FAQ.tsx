@@ -113,6 +113,32 @@ export const FAQ: React.FC = () => {
             );
           })}
         </div>
+
+        {/* AI Advisor Integrated Invitation Banner */}
+        <AnimatedReveal delay={250} distance={20}>
+          <div className="mt-12 p-6 sm:p-8 rounded-3xl bg-white border border-[#071A2B]/[0.08] shadow-lg flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-[#071A2B] text-[#C6A052] flex items-center justify-center shrink-0">
+                <HelpCircle className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="font-display text-base sm:text-lg font-bold text-[#071A2B]">
+                  ¿Desea formular una consulta específica en tiempo real?
+                </h4>
+                <p className="text-xs sm:text-sm text-[#071A2B]/75 font-normal">
+                  Utilice nuestro Asesor Virtual IA en la esquina inferior para resolver dudas sobre aranceles, contratos o escrituración.
+                </p>
+              </div>
+            </div>
+
+            <a
+              href="#ai-match"
+              className="px-6 py-3 rounded-full bg-[#071A2B] hover:bg-[#0f2e4a] text-[#C6A052] font-semibold text-xs tracking-wider uppercase whitespace-nowrap transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-md"
+            >
+              Probar Asistente IA
+            </a>
+          </div>
+        </AnimatedReveal>
       </div>
     </section>
   );

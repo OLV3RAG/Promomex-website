@@ -4,6 +4,8 @@ import {
   Sparkles,
   CheckCircle2,
   Lock,
+  ArrowRight,
+  Maximize2,
 } from 'lucide-react';
 import { AnimatedReveal } from './AnimatedReveal';
 
@@ -36,6 +38,33 @@ export const Oportunidades: React.FC<OportunidadesProps> = ({ onRequestCustom })
     'Avalúo Comercial y Análisis Comparativo de Mercado Homologado',
     'Auditoría Catastral, Predial y Servicios sin Adeudos',
     'Viabilidad Estructural y Dictamen Arquitectónico',
+  ];
+
+  const conceptualTypologies = [
+    {
+      id: 'villa-bosques',
+      title: 'Villa Minimalista en Voladizo',
+      zone: 'Zona Poniente / Bosques',
+      description: 'Líneas puras, grandes volados de concreto aparente y ventanales panorámicos hacia cañadas arboladas.',
+      image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80',
+      specs: 'Terrenos desde 650 m² · Arquitectura bioclimática',
+    },
+    {
+      id: 'biofilica-pedregal',
+      title: 'Residencia Biofílica de Cristal y Piedra',
+      zone: 'Jardines del Pedregal / San Ángel',
+      description: 'Integración orgánica con roca volcánica, espejos de agua reflectantes y jardines interiores de doble altura.',
+      image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80',
+      specs: 'Privacidad absoluta · Orientación solar pasiva',
+    },
+    {
+      id: 'penthouse-polanco',
+      title: 'Penthouse Contemporáneo con Sky Garden',
+      zone: 'Polanco / Campos Elíseos',
+      description: 'Residencia en altura con terraza perimetral de 360°, madera de encino ahumado y elevador privado a piso.',
+      image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80',
+      specs: 'Acceso restringido · Acabados de importación',
+    },
   ];
 
   return (
@@ -76,7 +105,7 @@ export const Oportunidades: React.FC<OportunidadesProps> = ({ onRequestCustom })
 
         {/* Elegant Apple-Style Bento Empty State Card */}
         <AnimatedReveal delay={280} distance={30}>
-          <div className="max-w-4xl mx-auto bg-white/[0.03] backdrop-blur-2xl border border-white/[0.08] hover:border-[#C6A052]/30 rounded-3xl p-8 sm:p-14 shadow-2xl shadow-black/60 relative transition-all duration-300 ease-apple hover:scale-[1.01]">
+          <div className="max-w-4xl mx-auto bg-white/[0.03] backdrop-blur-2xl border border-white/[0.08] hover:border-[#C6A052]/30 rounded-3xl p-8 sm:p-14 shadow-2xl shadow-black/60 relative transition-all duration-300 ease-apple hover:scale-[1.01] mb-20">
             <div className="text-center max-w-2xl mx-auto mb-12">
               {/* Emblematic Badge */}
               <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-[#C6A052] shadow-inner">
@@ -180,6 +209,86 @@ export const Oportunidades: React.FC<OportunidadesProps> = ({ onRequestCustom })
             </div>
           </div>
         </AnimatedReveal>
+
+        {/* 3. IMÁGENES ARQUITECTÓNICAS GENERADAS CON IA: TIPOLOGÍAS CONCEPTUALES */}
+        <div>
+          <div className="max-w-3xl mb-10">
+            <AnimatedReveal delay={0} distance={16}>
+              <div className="flex items-center gap-3 text-xs tracking-[0.25em] text-[#C6A052] font-semibold uppercase mb-3">
+                <Sparkles className="w-4 h-4" />
+                <span>Tipologías Arquitectónicas en Curaduría</span>
+              </div>
+            </AnimatedReveal>
+            <AnimatedReveal delay={100} distance={20}>
+              <h3 className="font-display text-2xl sm:text-3xl font-semibold text-white mb-2">
+                Lenguajes Constructivos de Alta Gama
+              </h3>
+            </AnimatedReveal>
+            <AnimatedReveal delay={150} distance={20}>
+              <p className="text-xs sm:text-sm text-[#F7F4EC]/70 font-light">
+                Modelos visuales representativos de los estándares de diseño, iluminación crepuscular y materialidad que evaluamos para nuestro portafolio.
+              </p>
+            </AnimatedReveal>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {conceptualTypologies.map((item, idx) => (
+              <AnimatedReveal key={item.id} delay={120 * idx} distance={24} className="h-full">
+                <div className="group h-full bg-white/[0.02] backdrop-blur-xl border border-[#C6A052]/20 hover:border-[#C6A052]/60 rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.015] flex flex-col justify-between shadow-xl">
+                  {/* Image Frame with Ultra-Fine Gold Border & AI Badge */}
+                  <div className="relative aspect-[16/10] overflow-hidden bg-[#071A2B]">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-700 ease-apple group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#071A2B] via-transparent to-transparent opacity-75" />
+
+                    {/* Badge: Visualización Arquitectónica */}
+                    <div className="absolute top-3.5 left-3.5 bg-[#071A2B]/85 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/10 text-[11px] font-medium text-[#C6A052] tracking-wider uppercase flex items-center gap-1.5 shadow-md">
+                      <Sparkles className="w-3 h-3 text-[#C6A052]" />
+                      <span>Visualización Arquitectónica</span>
+                    </div>
+
+                    <div className="absolute bottom-3 left-3.5 right-3.5 flex items-center justify-between text-[11px] text-white/90">
+                      <span className="font-medium bg-black/40 px-2.5 py-1 rounded-md backdrop-blur-sm">
+                        {item.zone}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Card Content */}
+                  <div className="p-6 sm:p-7 flex flex-col justify-between flex-1">
+                    <div>
+                      <h4 className="font-display text-lg font-bold text-white mb-2 group-hover:text-[#f3e5ab] transition-colors">
+                        {item.title}
+                      </h4>
+                      <p className="text-xs text-[#F7F4EC]/70 leading-relaxed font-light mb-4">
+                        {item.description}
+                      </p>
+                      <p className="text-[11px] text-[#C6A052] font-semibold mb-6">
+                        {item.specs}
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={() => onRequestCustom(`${item.title} (${item.zone})`)}
+                      className="w-full pt-4 border-t border-white/[0.08] inline-flex items-center justify-between text-xs tracking-wider uppercase font-semibold text-[#C6A052] group-hover:text-white transition-colors cursor-pointer"
+                    >
+                      <span>Consultar disponibilidad afín</span>
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                    </button>
+                  </div>
+                </div>
+              </AnimatedReveal>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center text-[11px] text-[#F7F4EC]/50 font-light">
+            * Las imágenes exhibidas son representaciones conceptuales de ultra alta definición generadas con IA para ilustrar tipologías arquitectónicas. Los expedientes de activos reales se presentan en sesión privada.
+          </div>
+        </div>
       </div>
     </section>
   );
