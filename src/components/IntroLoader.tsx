@@ -6,30 +6,34 @@ interface IntroLoaderProps {
 }
 
 export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
-  // Estados discretos para rendimiento a 60 FPS
-  const [showPhrase, setShowPhrase] = useState(false);
+  // Cronología secuencial:
+  // 0.0s – 1.8s: Trazo vectorial de la letra "P" desde su origen
+  // 1.8s – 3.4s: Trazo vectorial de la silueta de la "M" central (vértice, llave y casa)
+  // ~3.5s: Fade-in suave del relleno completo y de la frase de bienvenida
+  // 5.2s: Fade-out suave de la pantalla de carga completa (opacity-0, duration-700)
+  // 5.9s: Desmontaje absoluto del DOM (return null)
+  const [showFullFill, setShowFullFill] = useState(false);
   const [isFading, setIsFading] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
 
-  // Referencias a los timers para limpieza segura
   const timersRef = useRef<number[]>([]);
 
   useEffect(() => {
-    // 1. A los 3.2s: Aparece la frase de bienvenida
+    // A los 3.5s: Fade-in del logo completo y frase
     const t1 = window.setTimeout(() => {
-      setShowPhrase(true);
-    }, 3200);
+      setShowFullFill(true);
+    }, 3500);
 
-    // 2. A los 5.0s: Inicia el fade-out suave de toda la pantalla (duración 700ms)
+    // A los 5.2s: Fade-out suave de la pantalla completa (700ms)
     const t2 = window.setTimeout(() => {
       setIsFading(true);
-    }, 5000);
+    }, 5200);
 
-    // 3. A los 5.7s: Desmontaje inmediato del DOM
+    // A los 5.9s: Desmontaje definitivo del DOM
     const t3 = window.setTimeout(() => {
       setIsFinished(true);
       if (onComplete) onComplete();
-    }, 5700);
+    }, 5900);
 
     timersRef.current = [t1, t2, t3];
 
@@ -48,7 +52,6 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
     }, 200);
   };
 
-  // Desmontaje total del componente para liberar memoria
   if (isFinished) {
     return null;
   }
@@ -60,28 +63,159 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
         isFading ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
-      {/* Centro Absoluto Vertical y Horizontal */}
-      <div className="flex flex-col items-center justify-center text-center px-4 w-full">
-        {/* Contenedor del Logo Responsivo y Aspect-Square */}
-        <div className="w-64 max-w-[70vw] md:w-80 lg:w-96 max-w-md aspect-square relative overflow-hidden flex items-center justify-center">
-          {/* Logo Estático que se adapta a las dimensiones */}
-          <img
-            src={promomexOfficialLogo}
-            alt="Promomex"
-            className="w-full h-full object-contain block select-none pointer-events-none p-3"
-          />
+      {/* Resplandor radial de fondo sutil */}
+      <div className="absolute w-[500px] h-[500px] rounded-full bg-[#C6A052]/10 blur-[130px] pointer-events-none" />
 
-          {/* Cortina de Revelado Basada en Porcentajes (0% -> -100%) */}
-          <div className="absolute inset-0 w-full h-full bg-[#071A2B] pointer-events-none animate-reveal-up border-b-2 border-[#C6A052] shadow-[0_4px_12px_rgba(198,160,82,0.4)]" />
+      {/* Centro Absoluto */}
+      <div className="flex flex-col items-center justify-center text-center px-4 w-full relative z-10">
+        
+        {/* Contenedor del Isotipo Vectorial (Aspect-Square Responsivo) */}
+        <div className="w-64 max-w-[70vw] md:w-80 lg:w-96 max-w-md aspect-square relative flex items-center justify-center">
+          
+          {/* 1. Trazado Vectorial Secuencial Nativo SVG (P: 0s-1.8s, M: 1.8s-3.4s) */}
+          <svg
+            viewBox="0 0 400 400"
+            className="w-full h-full absolute inset-0 pointer-events-none"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              {/* Gradiente de trazo en oro corporativo */}
+              <linearGradient id="goldStrokeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#FFF2C2" />
+                <stop offset="50%" stopColor="#C6A052" />
+                <stop offset="100%" stopColor="#9B7832" />
+              </linearGradient>
+
+              {/* Resplandor dorado sutil en la punta del trazo */}
+              <filter id="goldGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            {/* FASE 1 (0s a 1.8s): Trazo de la letra "P" desde su origen (curva y asta vertical izquierda) */}
+            <g filter="url(#goldGlow)">
+              {/* Asta vertical izquierda de la P */}
+              <path
+                d="M 112 180 L 112 300"
+                stroke="url(#goldStrokeGrad)"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+                className="animate-draw-p"
+              />
+              {/* Curva y bucle superior de la P */}
+              <path
+                d="M 112 180 H 156 C 176 180 186 192 186 210 C 186 228 176 240 156 240 H 112"
+                stroke="url(#goldStrokeGrad)"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="animate-draw-p"
+              />
+            </g>
+
+            {/* FASE 2 (1.8s a 3.4s): Trazo de la silueta de la "M" central (vértice, llave y geometría de la casa) */}
+            <g filter="url(#goldGlow)">
+              {/* Geometría exterior de la casa y frontón arquitectónico */}
+              <path
+                d="M 200 45 L 340 145 L 320 160 L 200 75 L 80 160 L 60 145 Z"
+                stroke="url(#goldStrokeGrad)"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="animate-draw-m"
+              />
+              <path
+                d="M 72 155 L 72 325 L 328 325 L 328 155"
+                stroke="url(#goldStrokeGrad)"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="animate-draw-m"
+              />
+              <line
+                x1="52"
+                y1="325"
+                x2="348"
+                y2="325"
+                stroke="url(#goldStrokeGrad)"
+                strokeWidth="3"
+                strokeLinecap="round"
+                className="animate-draw-m"
+              />
+
+              {/* Silueta central de la M */}
+              <path
+                d="M 226 300 L 226 185 L 258 242 L 290 185 L 290 300"
+                stroke="url(#goldStrokeGrad)"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="animate-draw-m"
+              />
+
+              {/* Llave central patrimonial en el vértice */}
+              <circle
+                cx="200"
+                cy="150"
+                r="20"
+                stroke="url(#goldStrokeGrad)"
+                strokeWidth="2.5"
+                className="animate-draw-m"
+              />
+              <circle
+                cx="200"
+                cy="150"
+                r="8"
+                stroke="url(#goldStrokeGrad)"
+                strokeWidth="1.5"
+                className="animate-draw-m"
+              />
+              <line
+                x1="200"
+                y1="170"
+                x2="200"
+                y2="295"
+                stroke="url(#goldStrokeGrad)"
+                strokeWidth="3"
+                strokeLinecap="round"
+                className="animate-draw-m"
+              />
+              <path
+                d="M 200 258 H 222 M 200 282 H 224"
+                stroke="url(#goldStrokeGrad)"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                className="animate-draw-m"
+              />
+            </g>
+          </svg>
+
+          {/* 2. Fade-In suave del logotipo completo con su relleno y acabados (~3.5s) */}
+          <div
+            className={`absolute inset-0 flex items-center justify-center p-3 transition-opacity duration-700 ease-out ${
+              showFullFill ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <img
+              src={promomexOfficialLogo}
+              alt="Promomex"
+              className="w-full h-full object-contain block select-none pointer-events-none filter drop-shadow-[0_4px_24px_rgba(198,160,82,0.4)]"
+            />
+          </div>
         </div>
 
-        {/* Frase de Bienvenida en Laptop y Móvil */}
+        {/* 3. Frase de Bienvenida (~3.5s): Fade-In suave */}
         <div
           className={`flex flex-col items-center mt-6 md:mt-8 transition-opacity duration-700 ease-out px-4 ${
-            showPhrase ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            showFullFill ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
         >
-          {/* Separador fino */}
+          {/* Separador fino en oro */}
           <div className="flex items-center gap-3 w-32 md:w-48 mb-3">
             <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#C6A052]/80" />
             <span className="w-1.5 h-1.5 rounded-full bg-[#C6A052]" />
@@ -98,7 +232,7 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
         </div>
       </div>
 
-      {/* Botón Saltar Intro (Ubicación fija sin empalmarse) */}
+      {/* Botón Saltar Intro */}
       <button
         type="button"
         onClick={handleSkip}
