@@ -6,36 +6,43 @@ interface IntroLoaderProps {
 }
 
 export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
-  // Cronología secuencial:
-  // 0.0s – 1.8s: Trazo vectorial de la letra "P" desde su origen
-  // 1.8s – 3.4s: Trazo vectorial de la silueta de la "M" central (vértice, llave y casa)
-  // ~3.5s: Fade-in suave del relleno completo y de la frase de bienvenida
-  // 5.2s: Fade-out suave de la pantalla de carga completa (opacity-0, duration-700)
-  // 5.9s: Desmontaje absoluto del DOM (return null)
-  const [showFullFill, setShowFullFill] = useState(false);
+  // Cronología expandida para apreciación pausada:
+  // 0.0s – 2.6s: Trazo pausado de la letra "P" (duración: 2.6s)
+  // 2.6s – 5.4s: Trazo continuo de la "M", llave central y casa (duración: 2.8s)
+  // 5.4s – 6.2s: Momento de fijación (0.8s): figura armada visible y quieta en dorado
+  // 6.2s – 8.5s: Entrada de la frase (fade-in 1.2s) y tiempo de lectura tranquila
+  // 8.5s: Fade-out suave de toda la pantalla (700ms)
+  // 9.2s: Desmontaje definitivo del DOM (return null)
+  const [showFullLogo, setShowFullLogo] = useState(false);
+  const [showPhrase, setShowPhrase] = useState(false);
   const [isFading, setIsFading] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
 
   const timersRef = useRef<number[]>([]);
 
   useEffect(() => {
-    // A los 3.5s: Fade-in del logo completo y frase
+    // 1. Segundo 5.4: Momento de fijación, figura armada en dorado quieta
     const t1 = window.setTimeout(() => {
-      setShowFullFill(true);
-    }, 3500);
+      setShowFullLogo(true);
+    }, 5400);
 
-    // A los 5.2s: Fade-out suave de la pantalla completa (700ms)
+    // 2. Segundo 6.2: Entrada suave de la frase de bienvenida (fade-in 1.2s)
     const t2 = window.setTimeout(() => {
-      setIsFading(true);
-    }, 5200);
+      setShowPhrase(true);
+    }, 6200);
 
-    // A los 5.9s: Desmontaje definitivo del DOM
+    // 3. Segundo 8.5: Fade-out suave de toda la pantalla de carga (duración: 700ms)
     const t3 = window.setTimeout(() => {
+      setIsFading(true);
+    }, 8500);
+
+    // 4. Segundo 9.2: Desmontaje total del componente
+    const t4 = window.setTimeout(() => {
       setIsFinished(true);
       if (onComplete) onComplete();
-    }, 5900);
+    }, 9200);
 
-    timersRef.current = [t1, t2, t3];
+    timersRef.current = [t1, t2, t3, t4];
 
     return () => {
       timersRef.current.forEach((t) => window.clearTimeout(t));
@@ -63,33 +70,42 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
         isFading ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
-      {/* Resplandor radial de fondo sutil */}
-      <div className="absolute w-[500px] h-[500px] rounded-full bg-[#C6A052]/10 blur-[130px] pointer-events-none" />
+      {/* Resplandor radial de fondo sutil en Navy/Oro */}
+      <div className="absolute w-[600px] h-[600px] rounded-full bg-[#C6A052]/10 blur-[140px] pointer-events-none" />
 
-      {/* Centro Absoluto */}
+      {/* Botón Saltar Intro (Siempre accesible con z-index alto en la esquina) */}
+      <button
+        type="button"
+        onClick={handleSkip}
+        className="absolute top-6 right-6 md:top-8 md:right-8 z-50 text-xs tracking-widest text-[#C6A052]/80 hover:text-[#C6A052] transition-colors duration-200 py-2.5 px-5 rounded-full border border-white/10 hover:border-[#C6A052]/50 bg-white/[0.03] hover:bg-white/[0.08] cursor-pointer active:scale-95 shadow-lg backdrop-blur-sm"
+      >
+        SALTAR INTRO
+      </button>
+
+      {/* Centro Absoluto Vertical y Horizontal */}
       <div className="flex flex-col items-center justify-center text-center px-4 w-full relative z-10">
         
         {/* Contenedor del Isotipo Vectorial (Aspect-Square Responsivo) */}
         <div className="w-64 max-w-[70vw] md:w-80 lg:w-96 max-w-md aspect-square relative flex items-center justify-center">
           
-          {/* 1. Trazado Vectorial Secuencial Nativo SVG (P: 0s-1.8s, M: 1.8s-3.4s) */}
+          {/* Trazado Vectorial Secuencial Nativo SVG (P: 0s-2.6s | M: 2.6s-5.4s) */}
           <svg
             viewBox="0 0 400 400"
-            className="w-full h-full absolute inset-0 pointer-events-none"
+            className="w-full h-full absolute inset-0 pointer-events-none drop-shadow-[0_0_14px_rgba(198,160,82,0.45)]"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
             <defs>
-              {/* Gradiente de trazo en oro corporativo */}
+              {/* Gradiente de trazo en oro corporativo intenso */}
               <linearGradient id="goldStrokeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#FFF2C2" />
-                <stop offset="50%" stopColor="#C6A052" />
-                <stop offset="100%" stopColor="#9B7832" />
+                <stop offset="0%" stopColor="#FFF4D0" />
+                <stop offset="45%" stopColor="#C6A052" />
+                <stop offset="100%" stopColor="#9E782E" />
               </linearGradient>
 
-              {/* Resplandor dorado sutil en la punta del trazo */}
-              <filter id="goldGlow" x="-30%" y="-30%" width="160%" height="160%">
-                <feGaussianBlur stdDeviation="3" result="blur" />
+              {/* Resplandor dorado pronunciado (glow con rgba(198,160,82,0.4)) */}
+              <filter id="goldGlow" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur stdDeviation="3.5" result="blur" />
                 <feMerge>
                   <feMergeNode in="blur" />
                   <feMergeNode in="SourceGraphic" />
@@ -97,34 +113,34 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
               </filter>
             </defs>
 
-            {/* FASE 1 (0s a 1.8s): Trazo de la letra "P" desde su origen (curva y asta vertical izquierda) */}
+            {/* FASE 1 (0.0s a 2.6s): Trazo visible y nítido de la letra "P" */}
             <g filter="url(#goldGlow)">
-              {/* Asta vertical izquierda de la P */}
+              {/* Asta vertical de la P */}
               <path
                 d="M 112 180 L 112 300"
                 stroke="url(#goldStrokeGrad)"
-                strokeWidth="3.5"
+                strokeWidth="4.5"
                 strokeLinecap="round"
                 className="animate-draw-p"
               />
-              {/* Curva y bucle superior de la P */}
+              {/* Bucle superior curvo de la P */}
               <path
                 d="M 112 180 H 156 C 176 180 186 192 186 210 C 186 228 176 240 156 240 H 112"
                 stroke="url(#goldStrokeGrad)"
-                strokeWidth="3.5"
+                strokeWidth="4.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 className="animate-draw-p"
               />
             </g>
 
-            {/* FASE 2 (1.8s a 3.4s): Trazo de la silueta de la "M" central (vértice, llave y geometría de la casa) */}
+            {/* FASE 2 (2.6s a 5.4s): Trazo de la silueta "M", la llave central y la casa */}
             <g filter="url(#goldGlow)">
-              {/* Geometría exterior de la casa y frontón arquitectónico */}
+              {/* Frontón y geometría de la casa */}
               <path
                 d="M 200 45 L 340 145 L 320 160 L 200 75 L 80 160 L 60 145 Z"
                 stroke="url(#goldStrokeGrad)"
-                strokeWidth="3"
+                strokeWidth="3.8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 className="animate-draw-m"
@@ -132,7 +148,7 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
               <path
                 d="M 72 155 L 72 325 L 328 325 L 328 155"
                 stroke="url(#goldStrokeGrad)"
-                strokeWidth="2.5"
+                strokeWidth="3.2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 className="animate-draw-m"
@@ -143,7 +159,7 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
                 x2="348"
                 y2="325"
                 stroke="url(#goldStrokeGrad)"
-                strokeWidth="3"
+                strokeWidth="3.8"
                 strokeLinecap="round"
                 className="animate-draw-m"
               />
@@ -152,7 +168,7 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
               <path
                 d="M 226 300 L 226 185 L 258 242 L 290 185 L 290 300"
                 stroke="url(#goldStrokeGrad)"
-                strokeWidth="3.5"
+                strokeWidth="4.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 className="animate-draw-m"
@@ -164,7 +180,7 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
                 cy="150"
                 r="20"
                 stroke="url(#goldStrokeGrad)"
-                strokeWidth="2.5"
+                strokeWidth="3.2"
                 className="animate-draw-m"
               />
               <circle
@@ -172,7 +188,7 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
                 cy="150"
                 r="8"
                 stroke="url(#goldStrokeGrad)"
-                strokeWidth="1.5"
+                strokeWidth="2.2"
                 className="animate-draw-m"
               />
               <line
@@ -181,44 +197,44 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
                 x2="200"
                 y2="295"
                 stroke="url(#goldStrokeGrad)"
-                strokeWidth="3"
+                strokeWidth="3.8"
                 strokeLinecap="round"
                 className="animate-draw-m"
               />
               <path
                 d="M 200 258 H 222 M 200 282 H 224"
                 stroke="url(#goldStrokeGrad)"
-                strokeWidth="2.5"
+                strokeWidth="3.2"
                 strokeLinecap="round"
                 className="animate-draw-m"
               />
             </g>
           </svg>
 
-          {/* 2. Fade-In suave del logotipo completo con su relleno y acabados (~3.5s) */}
+          {/* Momento de Fijación (5.4s): Logo completo quieto en dorado (#C6A052) */}
           <div
             className={`absolute inset-0 flex items-center justify-center p-3 transition-opacity duration-700 ease-out ${
-              showFullFill ? 'opacity-100' : 'opacity-0'
+              showFullLogo ? 'opacity-100' : 'opacity-0'
             }`}
           >
             <img
               src={promomexOfficialLogo}
               alt="Promomex"
-              className="w-full h-full object-contain block select-none pointer-events-none filter drop-shadow-[0_4px_24px_rgba(198,160,82,0.4)]"
+              className="w-full h-full object-contain block select-none pointer-events-none filter drop-shadow-[0_4px_28px_rgba(198,160,82,0.5)]"
             />
           </div>
         </div>
 
-        {/* 3. Frase de Bienvenida (~3.5s): Fade-In suave */}
+        {/* Frase de Bienvenida (Entra a los 6.2s con fade-in suave de 1.2s) */}
         <div
-          className={`flex flex-col items-center mt-6 md:mt-8 transition-opacity duration-700 ease-out px-4 ${
-            showFullFill ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          className={`flex flex-col items-center mt-6 md:mt-8 transition-opacity duration-[1200ms] ease-out px-4 ${
+            showPhrase ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
         >
-          {/* Separador fino en oro */}
+          {/* Divisor sutil en oro */}
           <div className="flex items-center gap-3 w-32 md:w-48 mb-3">
             <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#C6A052]/80" />
-            <span className="w-1.5 h-1.5 rounded-full bg-[#C6A052]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C6A052] shadow-[0_0_8px_#C6A052]" />
             <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#C6A052]/80" />
           </div>
 
@@ -231,15 +247,6 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
           </span>
         </div>
       </div>
-
-      {/* Botón Saltar Intro */}
-      <button
-        type="button"
-        onClick={handleSkip}
-        className="absolute bottom-6 inset-x-0 mx-auto w-fit md:bottom-8 md:right-8 md:inset-x-auto text-xs tracking-widest text-[#C6A052]/80 hover:text-[#C6A052] transition-colors duration-200 py-2.5 px-5 rounded-full border border-white/10 hover:border-[#C6A052]/50 bg-white/[0.03] hover:bg-white/[0.08] cursor-pointer active:scale-95 z-10"
-      >
-        SALTAR INTRO
-      </button>
     </aside>
   );
 };

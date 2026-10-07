@@ -93,13 +93,13 @@
 .animate-draw-p {
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
-  animation: drawPath 1.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: drawPath 2.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .animate-draw-m {
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
-  animation: drawPath 1.6s cubic-bezier(0.25, 1, 0.5, 1) 1.8s forwards;
+  animation: drawPath 2.8s cubic-bezier(0.4, 0, 0.2, 1) 2.6s forwards;
 }
 
 /* Hardware accelerated logo reveal for mobile Safari/iOS (Zero Lag 60fps) */
