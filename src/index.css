@@ -119,6 +119,20 @@
   }
 }
 
+/* Smooth 300ms entrance transition for the main website after intro */
+@keyframes fadeInSite {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInSite 300ms ease-out forwards;
+}
+
 .animate-light-sweep {
   animation: goldenLightSweep 2.4s cubic-bezier(0.25, 1, 0.5, 1) 0.8s forwards;
 }

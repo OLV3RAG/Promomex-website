@@ -30,7 +30,9 @@ const CustomOpportunityModal = lazy(() =>
 );
 
 export default function App() {
-  const [showIntro, setShowIntro] = useState(true);
+  // MONTAJE DIFERIDO (LAZY RENDER):
+  // Mientras isIntroComplete sea false, NO se monta el sitio principal para liberar 100% de CPU/GPU
+  const [isIntroComplete, setIsIntroComplete] = useState(false);
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [isCustomOppOpen, setIsCustomOppOpen] = useState(false);
   const [customOppPreset, setCustomOppPreset] = useState('');
@@ -81,25 +83,30 @@ export default function App() {
   );
 
   const handleReplayIntro = useCallback(() => {
-    setShowIntro(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setIsIntroComplete(false);
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }, []);
 
   const handleIntroComplete = useCallback(() => {
-    setShowIntro(false);
+    setIsIntroComplete(true);
   }, []);
 
-  return (
-    <div className="min-h-screen bg-[#071A2B] text-[#F7F4EC] relative selection:bg-[#C6A052] selection:text-[#071A2B]">
-      {/* PANTALLA DE CARGA INICIAL: Trazado vectorial PROMOMEX 1.svg y frase oficial */}
-      {showIntro && <IntroLoader onComplete={handleIntroComplete} />}
+  // RENDERIZADO CONDICIONAL ESTRICTO:
+  // Mientras la intro esté activa, el navegador NO carga en segundo plano las imágenes de Unsplash,
+  // los esquemas Bento, ni la barra de navegación. El 100% de los recursos se destinan a la bienvenida.
+  if (!isIntroComplete) {
+    return <IntroLoader onComplete={() => setIsIntroComplete(true)} />;
+  }
 
+  // FASE 2: MONTAJE DEL SITIO PRINCIPAL CON FADE-IN SUAVE DE ENTRADA (400ms)
+  return (
+    <div className="min-h-screen bg-[#071A2B] text-[#F7F4EC] relative selection:bg-[#C6A052] selection:text-[#071A2B] animate-fade-in">
       {/* Header / Navbar con Frosted Glass y Enlaces Estilizados */}
       <Navbar onContactClick={handleContactClick} />
 
       {/* Main Content Container: Esquemas visuales minimalistas estilo Apple Bento */}
       <main>
-        {/* 1. Hero / Inicio: Tipografía balanceada, prueba cuantitativa y render arquitectónico */}
+        {/* 1. Hero / Inicio */}
         <Hero
           onExploreOpportunities={handleExploreOpportunities}
           onExploreServices={handleExploreServices}
