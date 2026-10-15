@@ -133,6 +133,45 @@
   animation: fadeInSite 300ms ease-out forwards;
 }
 
+/* Golden Laser Reveal from Left ('P') to Right ('M') */
+@keyframes revealLeftToRight {
+  0% {
+    clip-path: inset(0 100% 0 0);
+    -webkit-clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    clip-path: inset(0 0% 0 0);
+    -webkit-clip-path: inset(0 0% 0 0);
+  }
+}
+
+@keyframes laserSweepLine {
+  0% {
+    left: 0%;
+    opacity: 0;
+  }
+  2% {
+    opacity: 1;
+  }
+  98% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+.animate-laser-reveal {
+  -webkit-animation: revealLeftToRight 3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: revealLeftToRight 3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.animate-laser-line {
+  -webkit-animation: laserSweepLine 3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: laserSweepLine 3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
 .animate-light-sweep {
   animation: goldenLightSweep 2.4s cubic-bezier(0.25, 1, 0.5, 1) 0.8s forwards;
 }
