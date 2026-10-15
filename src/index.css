@@ -80,6 +80,53 @@
   }
 }
 
+/* Apple-style Golden Light Sweep & Lens Flare Twinkle */
+@keyframes goldenLightSweep {
+  0% {
+    transform: translate3d(-160%, 0, 0) rotate(25deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(260%, 0, 0) rotate(25deg);
+    opacity: 0;
+  }
+}
+
+@keyframes flareTwinkle {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  35% {
+    transform: scale(1.4) rotate(45deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 16px #FFF4D0) drop-shadow(0 0 32px #C6A052);
+  }
+  70% {
+    transform: scale(1.05) rotate(90deg);
+    opacity: 0.85;
+    filter: drop-shadow(0 0 12px #C6A052);
+  }
+  100% {
+    transform: scale(0.85) rotate(135deg);
+    opacity: 0.35;
+  }
+}
+
+.animate-light-sweep {
+  animation: goldenLightSweep 2.4s cubic-bezier(0.25, 1, 0.5, 1) 0.8s forwards;
+}
+
+.animate-flare-twinkle {
+  animation: flareTwinkle 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 /* Sequential Vector Stroke Drawing for Promomex Isotype (P then M) */
 @keyframes drawPath {
   from {
